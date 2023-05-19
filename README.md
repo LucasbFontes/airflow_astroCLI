@@ -2,8 +2,10 @@
 
 This project was made during the workshop given by [The Plumbers](https://theplumbers.com.br/) and I made it alongside with the instructor. The goal of this project is to perform
 an ETL process orchestrated by Apache Airflow. It involves extracting data from the raw layer of minIO, transforming it, and loading it into a curated layer within minIO.
-The data will later be served on postgresDB.
+The data will later be served on postgresDB. The below image brings a more visual explanation:
 
+
+<img width="1130" alt="Screen Shot 2023-05-18 at 12 12 00" src="https://github.com/LucasbFontes/airflow_astroCLI/assets/68716835/b6b222d7-4e3b-455a-ad77-3c3a58805990">
 
 # Technologies
 
@@ -31,5 +33,13 @@ define the user own data type, build custom functions and write different progra
 
 # The project 
 
+As mentioned above, the goal is to create an ETL pipeline using Astro SDK as an orchestration tool. First, I put 2 json files in the landing zone(minIO) to emulate the source, then I wrote SQL queries to clean this files and saved as table, in the user.json I had 2 columns in a dictionary format, so in order to transform it as normal column from a database I cast it as a JSONB and send it to the respective column. Later I joined the 2 tables to create a subscription table. After that, I created a new column to classify the plan according to its value, the next step was use the great expectations library to ensure quality to my pipeline. Subsequently my curated layer received the new subscription file that was sent to postgres to be consumed. 
 
-<img width="1130" alt="Screen Shot 2023-05-18 at 12 12 00" src="https://github.com/LucasbFontes/airflow_astroCLI/assets/68716835/b6b222d7-4e3b-455a-ad77-3c3a58805990">
+Below you can find my pipeline graph:
+
+<img width="1316" alt="Screen Shot 2023-05-16 at 20 15 48" src="https://github.com/LucasbFontes/airflow_astroCLI/assets/68716835/e8ce352c-498e-4493-b3cd-efce4c097572">
+
+And the data on Postgres:
+
+<img width="1083" alt="Screen Shot 2023-05-16 at 20 14 01" src="https://github.com/LucasbFontes/airflow_astroCLI/assets/68716835/cb0f7610-69a0-4027-9391-5441361b4a5b">
+
